@@ -3,4 +3,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    &__btns{
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        padding: 0 .6rem;
+    }
+    &__delete{
+        background-color: transparent;
+        cursor: pointer;
+        border: none;
+    }
 }

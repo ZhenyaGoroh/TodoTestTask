@@ -13,9 +13,17 @@ function App() {
     <div className={s.todo}>
       <header className={s.todo__header}>ToDo list</header>
       <Input />
-      {todos.map((todo) => (
-        <Todo key={uuidv4()} todo={todo} />
-      ))}
+      {todos
+        .filter((todo) => {
+          if (sorting === "ALL") return todo
+          if (sorting === "ACTIVE") {
+            return todo.completed === false
+          }
+          return todo.completed === true
+        })
+        .map((todo) => (
+          <Todo key={uuidv4()} todo={todo} />
+        ))}
       <Footer
         active={todos.filter((todo) => todo.completed === false).length}
         sorting={sorting}

@@ -37,6 +37,13 @@ function Footer({
           value="COMPLETED"
         />
       </span>
+      <button
+        onClick={() => deleteCompleted()}
+        className={s.footer__delete}
+        type="button"
+      >
+        Delete completed
+      </button>
     </div>
   )
 }
