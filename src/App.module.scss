@@ -15,4 +15,8 @@
         font-size: $title-fs;
         font-weight: 700;
     }
+    &__empty{
+        color: $green-cl;
+        font-size: $text-fs;
+    }
 }

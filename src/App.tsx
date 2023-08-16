@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useLayoutEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import s from "./App.module.scss"
@@ -28,6 +29,17 @@ function App() {
       <Input />
       {isLoading ? (
         <Loader />
+      ) : todos.filter((todo) => {
+          if (sorting === "ALL") return todo
+          if (sorting === "ACTIVE") {
+            return todo.completed === false
+          }
+          return todo.completed === true
+        }).length === 0 ? (
+        <div className={s.todo__empty}>
+          There are no tasks in your ToDo list at the moment. Feel free to add
+          new tasks using the input above.
+        </div>
       ) : (
         todos
           .filter((todo) => {
