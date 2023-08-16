@@ -14,16 +14,31 @@ function App() {
   const { setTodos } = useTodo()
   useLayoutEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users/1/todos")
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+        return response.json()
+      })
       .then((data: ITodo[]) => {
         setTodos(data.slice(0, 5))
       })
-      .catch((e) => console.error(e))
+      .catch((e) => {
+        console.error(e)
+      })
       .finally(() => setIsLoading(false))
   }, [])
   const { todos } = useTodo()
   const [sorting, setSorting] = useState<"ALL" | "ACTIVE" | "COMPLETED">("ALL")
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null)
+
+  const filteredTodos = todos.filter((todo) => {
+    if (sorting === "ALL") return todo
+    if (sorting === "ACTIVE") {
+      return todo.completed === false
+    }
+    return todo.completed === true
+  })
 
   return (
     <div className={s.todo}>
@@ -31,35 +46,21 @@ function App() {
       <Input />
       {isLoading ? (
         <Loader />
-      ) : todos.filter((todo) => {
-          if (sorting === "ALL") return todo
-          if (sorting === "ACTIVE") {
-            return todo.completed === false
-          }
-          return todo.completed === true
-        }).length === 0 ? (
+      ) : filteredTodos.length === 0 ? (
         <div className={s.todo__empty}>
           {sorting === "ALL" && "You have no todos"}
           {sorting === "ACTIVE" && "You have no active todos"}
           {sorting === "COMPLETED" && "You have no completed todos"}
         </div>
       ) : (
-        todos
-          .filter((todo) => {
-            if (sorting === "ALL") return todo
-            if (sorting === "ACTIVE") {
-              return todo.completed === false
-            }
-            return todo.completed === true
-          })
-          .map((todo) => (
-            <Todo
-              key={uuidv4()}
-              todo={todo}
-              isBeingEdited={editingTodoId === String(todo.id)}
-              setEditingTodoId={setEditingTodoId}
-            />
-          ))
+        filteredTodos.map((todo) => (
+          <Todo
+            key={uuidv4()}
+            todo={todo}
+            isBeingEdited={editingTodoId === String(todo.id)}
+            setEditingTodoId={setEditingTodoId}
+          />
+        ))
       )}
       <Footer
         active={todos.filter((todo) => todo.completed === false).length}
