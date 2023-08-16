@@ -37,8 +37,9 @@ function App() {
           return todo.completed === true
         }).length === 0 ? (
         <div className={s.todo__empty}>
-          There are no tasks in your ToDo list at the moment. Feel free to add
-          new tasks using the input above.
+          {sorting === "ALL" && "You have no todos"}
+          {sorting === "ACTIVE" && "You have no active todos"}
+          {sorting === "COMPLETED" && "You have no completed todos"}
         </div>
       ) : (
         todos
