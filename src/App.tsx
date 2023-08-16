@@ -23,6 +23,8 @@ function App() {
   }, [])
   const { todos } = useTodo()
   const [sorting, setSorting] = useState<"ALL" | "ACTIVE" | "COMPLETED">("ALL")
+  const [editingTodoId, setEditingTodoId] = useState<string | null>(null)
+
   return (
     <div className={s.todo}>
       <header className={s.todo__header}>ToDo list</header>
@@ -50,7 +52,14 @@ function App() {
             }
             return todo.completed === true
           })
-          .map((todo) => <Todo key={uuidv4()} todo={todo} />)
+          .map((todo) => (
+            <Todo
+              key={uuidv4()}
+              todo={todo}
+              isBeingEdited={editingTodoId === String(todo.id)}
+              setEditingTodoId={setEditingTodoId}
+            />
+          ))
       )}
       <Footer
         active={todos.filter((todo) => todo.completed === false).length}

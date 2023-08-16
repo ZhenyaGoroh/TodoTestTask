@@ -1,21 +1,31 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from "react"
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im"
 import ITodo from "../../types/ITodo"
 import s from "./Todo.module.scss"
 import { useTodo } from "../../store/useTodo"
 
-function Todo({ todo }: { todo: ITodo }) {
+function Todo({
+  todo,
+  isBeingEdited,
+  setEditingTodoId,
+}: {
+  todo: ITodo
+  isBeingEdited: boolean
+  setEditingTodoId: (id: string | null) => void
+}) {
   const { toggleTodoStatus, updateText } = useTodo()
-  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<boolean>(isBeingEdited)
   const [title, setTitle] = useState<string>(todo.title)
 
   const handleTitleChange = () => {
     updateText(title, todo.id)
     setIsEditing(false)
+    setEditingTodoId(null)
   }
+
   return (
     <div className={s.todo}>
       <div className={s.todo__status}>
@@ -48,9 +58,12 @@ function Todo({ todo }: { todo: ITodo }) {
         />
       ) : (
         <span
-          style={todo.completed ? { textDecoration: "line-through" } : {}}
-          onClick={() => setIsEditing(true)}
+          onClick={() => {
+            setIsEditing(true)
+            setEditingTodoId(String(todo.id))
+          }}
           className={s.todo__title}
+          style={todo.completed ? { textDecoration: "line-through" } : {}}
         >
           {todo.title}
         </span>
