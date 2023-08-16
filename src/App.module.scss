@@ -1,1 +1,18 @@
+@import "./styles/general.scss";
 
+.todo{
+    max-width: 30rem;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: .25rem;
+    padding: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    &__header{
+        font-size: $title-fs;
+        font-weight: 700;
+    }
+}

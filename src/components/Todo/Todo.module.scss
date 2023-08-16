@@ -1,0 +1,29 @@
+@import "../../styles/general.scss";
+
+.todo {
+    display: flex;
+    align-items: center;
+    font-size: $text-fs;
+    gap: .6rem;
+    &__btn {
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+    &__input {
+        outline: none;
+        border: none;
+        border-bottom: 1px solid black;
+        box-sizing: border-box;
+        padding: 0.3rem;
+    }
+    &__title {
+        box-sizing: border-box;
+        padding: 0.3rem;
+        border-bottom: 1px solid white;
+    }
+}
