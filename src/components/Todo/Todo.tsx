@@ -26,14 +26,6 @@ function Todo({
     setEditingTodoId(null)
   }
 
-  
-
-  function handleWindowClick() {
-    window?.onclick((e) => {
-      console.log(e)
-    })
-  }
-
   return (
     <div className={s.todo}>
       <div className={s.todo__status}>
@@ -80,4 +72,4 @@ function Todo({
   )
 }
 
-export default React.memo(Todo)
+export default Todo
