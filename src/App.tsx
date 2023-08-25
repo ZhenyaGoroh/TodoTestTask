@@ -34,6 +34,12 @@ function App() {
     window.addEventListener("click", (e) => {
       const target = e.target as HTMLElement
 
+      if (target?.nodeName === "path" || target?.nodeName === "svg") {
+        setEditingTodoId(null)
+        ref.current?.blur()
+        return
+      }
+
       if (
         target !== ref.current &&
         target?.nodeName !== "SPAN" &&
