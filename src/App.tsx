@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import s from "./App.module.scss"
 import Input from "./components/Input/Input"
@@ -12,6 +12,9 @@ import ITodo from "./types/ITodo"
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const { setTodos } = useTodo()
+
+  const ref = useRef<HTMLInputElement>(null)
+  const [editingTodoId, setEditingTodoId] = useState<string | null>(null)
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users/1/todos?_limit=5")
       .then((response) => {
@@ -27,10 +30,22 @@ function App() {
         console.error(e)
       })
       .finally(() => setIsLoading(false))
+
+    window.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement
+
+      if (
+        target !== ref.current &&
+        target?.nodeName !== "SPAN" &&
+        !target?.className.includes("_todo__title")
+      ) {
+        setEditingTodoId(null)
+        ref.current?.blur()
+      }
+    })
   }, [])
   const { todos } = useTodo()
   const [sorting, setSorting] = useState<"ALL" | "ACTIVE" | "COMPLETED">("ALL")
-  const [editingTodoId, setEditingTodoId] = useState<string | null>(null)
 
   const filteredTodos = todos.filter((todo) => {
     if (sorting === "ALL") return todo
@@ -59,6 +74,7 @@ function App() {
             todo={todo}
             isBeingEdited={editingTodoId === String(todo.id)}
             setEditingTodoId={setEditingTodoId}
+            ref={ref}
           />
         ))
       )}

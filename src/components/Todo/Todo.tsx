@@ -1,21 +1,24 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState } from "react"
+import React, { forwardRef, useState } from "react"
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im"
 import ITodo from "../../types/ITodo"
 import s from "./Todo.module.scss"
 import { useTodo } from "../../store/useTodo"
 
-function Todo({
-  todo,
-  isBeingEdited,
-  setEditingTodoId,
-}: {
-  todo: ITodo
-  isBeingEdited: boolean
-  setEditingTodoId: (id: string | null) => void
-}) {
+const Todo = forwardRef(function Todo(
+  {
+    todo,
+    isBeingEdited,
+    setEditingTodoId,
+  }: {
+    todo: ITodo
+    isBeingEdited: boolean
+    setEditingTodoId: (id: string | null) => void
+  },
+  ref: React.Ref<HTMLInputElement>
+) {
   const { toggleTodoStatus, updateText } = useTodo()
   const [isEditing, setIsEditing] = useState<boolean>(isBeingEdited)
   const [title, setTitle] = useState<string>(todo.title)
@@ -44,9 +47,12 @@ function Todo({
 
       {isEditing ? (
         <input
+          ref={ref}
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value)
+          }}
           onKeyDown={(key) =>
             key.key === "Enter" &&
             title.trim().length > 0 &&
@@ -70,6 +76,6 @@ function Todo({
       )}
     </div>
   )
-}
+})
 
 export default Todo
