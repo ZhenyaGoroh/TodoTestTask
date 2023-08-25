@@ -1,21 +1,29 @@
-﻿# ToDo App Test Project
 
-This is a simple ToDo application created as a test project.
+# Todo Test task 📝
 
-## Features
+This is a simple todo list app built as a test assignment.
 
-- Add new tasks to your ToDo list.
-- Mark tasks as completed.
-- Delete completed tasks.
-- Sort tasks by status (All, Active, Completed).
 
-## Technologies Used
+## Features 
 
-- React
-- TypeScript
-- Zustand (State Management)
-- SCSS Modules
+- Add new tasks 
+- Mark tasks as completed 
+- Edit task text 
+- Sort tasks 
+- Remove all completed tasks 
 
 
 
+## Tech Stack
+React, Zustand, TypeScript
 
+
+
+## Installation
+```bash
+  git clone https://github.com/ZhenyaGoroh/TodoTestTask.git
+  npm i
+  npm run start
+```
+
+    
