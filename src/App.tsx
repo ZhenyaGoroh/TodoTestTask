@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useLayoutEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import s from "./App.module.scss"
 import Input from "./components/Input/Input"
@@ -12,8 +12,8 @@ import ITodo from "./types/ITodo"
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const { setTodos } = useTodo()
-  useLayoutEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users/1/todos")
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users/1/todos?_limit=5")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok")
